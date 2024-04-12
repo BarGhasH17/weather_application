@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 PreferredSizeWidget myAppBar() {
   return AppBar(
-    backgroundColor: Colors.blueGrey[900],
+    backgroundColor: Colors.lightBlue[500],
     leading: Builder(
       builder: (context) => IconButton(
           icon: const Icon(
@@ -24,10 +24,13 @@ PreferredSizeWidget myAppBar() {
     actions: [
       PopupMenuButton(
         iconColor: Colors.white,
-        color: Colors.blueGrey[100],
+        color: Colors.lightBlue[400],
         itemBuilder: (context) => const [
           PopupMenuItem(
-            child: Text("setting"),
+            child: Text(
+              style: TextStyle(color: Colors.white),
+              "Setting",
+            ),
           ),
         ],
       )
