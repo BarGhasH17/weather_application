@@ -29,7 +29,7 @@ PreferredSizeWidget myAppBar() {
           PopupMenuItem(
             child: Text(
               style: TextStyle(color: Colors.white),
-              "Setting",
+              "info",
             ),
           ),
         ],
