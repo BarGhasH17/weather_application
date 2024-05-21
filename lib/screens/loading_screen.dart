@@ -69,31 +69,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await location.getCurrentLocation();
     double latitude = location.latitude;
     double longitude = location.longitude;
-    var dataFromOpenWeatherMap =
-        await getLocationDataFromOpenWeatherMap(latitude, longitude);
+    // var dataFromOpenWeatherMap =
+    //     await getLocationDataFromOpenWeatherMap(latitude, longitude);
     var currentDataFromAccWeather =
         await getCurrentLocationDataFromAccWeather(latitude, longitude);
     var dataFromAccWeather =
         await get3DaysForecastFromAccWeather(latitude, longitude);
-    // print(await dataFromOpenWeatherMap);
 
-    // String appId = '8d481789260fee5c79b2b1d513c85944';
-    // String url =
-    //     'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$appId';
-    // Uri uri = Uri.parse(url);
-    // http.Response res = await http.get(uri);
-    // if (res.statusCode == 200) {
-    //   String data = res.body;
-    //   var weatherData = await jsonDecode(data);
-    //   print(weatherData);
-    // } else {
-    //   print(res.statusCode);
-    // }
     // ignore: use_build_context_synchronously
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return HomeScreen(
         currentLocationWeather: currentDataFromAccWeather,
-        LocationWeather: dataFromAccWeather,
+        locationWeather: dataFromAccWeather,
         cityName: cityName,
       );
     }));

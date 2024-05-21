@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'drawer.dart';
 import 'app_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_application/services/icon_creator.dart' as i;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {this.currentLocationWeather,
-      this.LocationWeather,
+      this.locationWeather,
       this.cityName,
       super.key});
-  final currentLocationWeather;
-  final LocationWeather;
-  final cityName;
+  final dynamic currentLocationWeather;
+  final dynamic locationWeather;
+  final dynamic cityName;
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -27,15 +28,17 @@ class HomeScreenState extends State<HomeScreen> {
       minTemperatureDay2,
       minTemperatureDay3;
   late String city;
-  late var day1, day2, day3;
+  late DateTime day1, day2, day3;
+  late int iconNumber, iconNumber1, iconNumber2, iconNumber3;
   var date = DateTime.now();
+  i.IconCreator iconCreator = i.IconCreator();
 
   @override
   void initState() {
     super.initState();
 
     updateUI(
-        widget.currentLocationWeather, widget.LocationWeather, widget.cityName);
+        widget.currentLocationWeather, widget.locationWeather, widget.cityName);
   }
 
   void updateUI(
@@ -49,9 +52,13 @@ class HomeScreenState extends State<HomeScreen> {
     minTemperature = weatherData['DailyForecasts'][0]['Temperature']['Minimum']
             ['Value']
         .toInt();
+    iconNumber = currentWeatherData[0]['WeatherIcon'];
     day1 = DateTime.parse(weatherData['DailyForecasts'][1]['Date']);
     day2 = DateTime.parse(weatherData['DailyForecasts'][2]['Date']);
     day3 = DateTime.parse(weatherData['DailyForecasts'][3]['Date']);
+    iconNumber1 = weatherData['DailyForecasts'][1]['Day']['Icon'];
+    iconNumber2 = weatherData['DailyForecasts'][2]['Day']['Icon'];
+    iconNumber3 = weatherData['DailyForecasts'][3]['Day']['Icon'];
     maxTemperatureDay1 = weatherData['DailyForecasts'][1]['Temperature']
             ['Maximum']['Value']
         .toInt();
@@ -129,38 +136,33 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: 200,
-              child: Icon(
-                Icons.sunny,
-                color: Colors.yellow,
-                size: 200,
-              ),
+              child: iconCreator.icon(iconNumber, 200),
             ),
             Card(
-              color: Color.fromARGB(255, 51, 185, 247),
+              color: const Color.fromARGB(255, 51, 185, 247),
               surfaceTintColor: Colors.white,
               shadowColor: Colors.black,
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     SizedBox(
                       height: 50,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.sunny,
-                            color: Colors.yellow,
-                          ),
+                          iconCreator.icon(iconNumber1, 45),
                           Text(
                             DateFormat('EEEE').format(day1),
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                           Text(
                             "$maxTemperatureDay1°/$minTemperatureDay1°",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                         ],
                       ),
@@ -168,19 +170,18 @@ class HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 50,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.sunny,
-                            color: Colors.yellow,
-                          ),
+                          iconCreator.icon(iconNumber2, 45),
                           Text(
                             DateFormat('EEEE').format(day2),
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                           Text(
                             "$maxTemperatureDay2°/$minTemperatureDay2°",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                         ],
                       ),
@@ -188,19 +189,22 @@ class HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 50,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.sunny,
-                            color: Colors.yellow,
-                          ),
+                          iconCreator.icon(iconNumber3, 45),
                           Text(
                             DateFormat('EEEE').format(day3),
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
                           ),
                           Text(
                             "$maxTemperatureDay3°/$minTemperatureDay3°",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
                           ),
                         ],
                       ),
