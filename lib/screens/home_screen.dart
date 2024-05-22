@@ -21,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   var date = DateTime.now();
   IconCreator iconCreator = IconCreator();
+  MyAppBar myAppBar = const MyAppBar();
 
   @override
   void initState() {
@@ -34,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlue[600],
-      appBar: myAppBar(),
+      appBar: const MyAppBar(),
       drawer: const MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),

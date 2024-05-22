@@ -20,7 +20,7 @@ class IconCreator {
           image: const AssetImage('assets/icons/storm.png'), height: height);
     } else if ([18, 26].contains(iconNumber)) {
       return Image(
-          image: const AssetImage('assets/icons/raining.png'), height: height);
+          image: const AssetImage('assets/icons/rain.png'), height: height);
     } else if ([19, 20, 21, 43].contains(iconNumber)) {
       return Image(
           image: const AssetImage('assets/icons/flurries.png'), height: height);
