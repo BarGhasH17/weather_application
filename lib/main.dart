@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_application/Theme/theme.dart';
 import 'package:weather_application/Theme/theme_provider.dart';
 import 'package:weather_application/screens/loading_screen.dart';
 

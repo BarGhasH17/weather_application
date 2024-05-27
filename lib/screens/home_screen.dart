@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/services/final_data.dart';
-import 'drawer.dart';
 import 'app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_application/services/icon_generator.dart';
@@ -51,7 +50,6 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: MyAppBar(modeNumber: modeNumber),
-      drawer: const MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
         child: Column(

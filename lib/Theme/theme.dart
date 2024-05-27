@@ -8,6 +8,8 @@ ThemeData lightMode = ThemeData(
     secondary: Colors.lightBlue.shade400,
     secondaryContainer: const Color.fromARGB(255, 51, 185, 247),
     onSurface: Colors.white,
+    onBackground: Colors.white,
+    onSecondary: Colors.white,
   ),
 );
 

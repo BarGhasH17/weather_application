@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_application/Theme/theme_provider.dart';
+import 'package:weather_application/screens/city_screen.dart';
 import 'package:weather_application/screens/info_screen.dart';
 import 'package:weather_application/screens/loading_screen.dart';
 
@@ -28,7 +29,9 @@ class MyAppBarState extends State<MyAppBar> {
             ),
             tooltip: "View cities",
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const CityScreen();
+              }));
             }),
       ),
       centerTitle: true,
