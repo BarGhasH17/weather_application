@@ -54,25 +54,28 @@ class MyAppBarState extends State<MyAppBar> {
           itemBuilder: (context) => [
             CheckedPopupMenuItem(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
                   return const LoadingScreen(modeNumber: 1);
-                }));
+                }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text('Optimistic'),
             ),
             CheckedPopupMenuItem(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
                   return const LoadingScreen(modeNumber: 2);
-                }));
+                }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text('Average'),
             ),
             CheckedPopupMenuItem(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
                   return const LoadingScreen(modeNumber: 3);
-                }));
+                }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text('pessimistic'),
             ),
@@ -82,59 +85,3 @@ class MyAppBarState extends State<MyAppBar> {
     );
   }
 }
-
-// PreferredSizeWidget myAppBar() {
-//   return AppBar(
-//     backgroundColor: Colors.lightBlue[500],
-//     leading: Builder(
-//       builder: (context) => IconButton(
-//           icon: const Icon(
-//             Icons.location_city,
-//             color: Colors.white,
-//           ),
-//           tooltip: "View cities",
-//           onPressed: () {
-//             Scaffold.of(context).openDrawer();
-//           }),
-//     ),
-//     centerTitle: true,
-//     title: const Text(
-//       style: TextStyle(
-//         color: Colors.white,
-//       ),
-//       "Weather",
-//     ),
-//     actions: [
-//       IconButton(
-//         onPressed: () {
-//           Navigator.push(context, MaterialPageRoute(builder: (context) {
-//             return const InfoScreen();
-//           }));
-//         },
-//         icon: const Icon(
-//           Icons.info,
-//           color: Colors.white,
-//         ),
-//       )
-//       // PopupMenuButton(
-//       //   iconColor: Colors.white,
-//       //   color: Colors.lightBlue[100],
-//       //   itemBuilder: (context) => [
-//       //     PopupMenuItem(
-//       //       onTap: () {
-//       //         Navigator.push(context, MaterialPageRoute(builder: (context) {
-//       //           return const InfoScreen();
-//       //         }));
-//       //       },
-//       //       child: const Center(
-//       //         child: Text(
-//       //           style: TextStyle(color: Color.fromARGB(255, 3, 155, 229)),
-//       //           "About  ",
-//       //         ),
-//       //       ),
-//       //     ),
-//       //   ],
-//       // )
-//     ],
-//   );
-// }

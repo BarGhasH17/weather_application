@@ -14,13 +14,5 @@ class LocationData {
     Uri uri = Uri.parse(url);
     http.Response res = await http.get(uri);
     return jsonDecode(res.body);
-    // ignore: use_build_context_synchronously
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return HomeScreen(
-    //     currentLocationWeather: data,
-    //     locationWeather: data,
-    //     cityName: 'Chyelyabinsk',
-    //   );
-    // }));
   }
 }

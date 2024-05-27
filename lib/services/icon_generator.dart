@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 
 class IconCreator {
-  dynamic iconWithLink(iconLink, {height}) {
-    try {
-      return Image.network(
-        'http:$iconLink',
-        height: height,
-      );
-    } catch (e) {
-      return Image.network(iconLink);
-    }
-  }
-
   dynamic icon(int iconNumber, double height) {
     if ([1, 2, 3, 4, 30].contains(iconNumber)) {
       return Image(

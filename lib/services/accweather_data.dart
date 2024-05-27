@@ -32,9 +32,6 @@ class AccWeatherData {
     day1 = DateTime.parse(json['DailyForecasts'][1]['Date']);
     day2 = DateTime.parse(json['DailyForecasts'][2]['Date']);
     day3 = DateTime.parse(json['DailyForecasts'][3]['Date']);
-    // iconNumber1 = json['DailyForecasts'][1]['Day']['Icon'];
-    // iconNumber2 = json['DailyForecasts'][2]['Day']['Icon'];
-    // iconNumber3 = json['DailyForecasts'][3]['Day']['Icon'];
     maxTemperatureDay1 =
         json['DailyForecasts'][1]['Temperature']['Maximum']['Value'].toInt();
     minTemperatureDay1 =

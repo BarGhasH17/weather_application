@@ -17,7 +17,7 @@ class LocationData {
   }
 
   Future getCurrentData(lat, lon) async {
-    String appId = 'bGfh8vLrLl6b5GJYZWOPAdNLnsudtCx1';
+    String appId = 'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1';
     String cityId = await getCityId(lat, lon, appId);
     String url =
         'http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=$appId';
@@ -27,7 +27,7 @@ class LocationData {
   }
 
   Future get3DaysData(lat, lon) async {
-    String appId = 'bGfh8vLrLl6b5GJYZWOPAdNLnsudtCx1';
+    String appId = 'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1';
     String cityId = await getCityId(lat, lon, appId);
     String url =
         'http://dataservice.accuweather.com/forecasts/v1/daily/5day/$cityId?apikey=$appId&metric=true';
@@ -46,13 +46,5 @@ class LocationData {
     iconNumber = currentData[0]['WeatherIcon'];
     var data = await get3DaysData(latitude, longitude);
     return [currentData, data, cityName];
-    // ignore: use_build_context_synchronously
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return HomeScreen(
-    //     currentLocationWeather: currentData,
-    //     locationWeather: data,
-    //     cityName: cityName,
-    //   );
-    // }));
   }
 }
