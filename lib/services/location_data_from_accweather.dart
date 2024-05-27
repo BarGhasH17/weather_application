@@ -17,7 +17,7 @@ class LocationData {
   }
 
   Future getCurrentData(lat, lon) async {
-    String appId = 'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1';
+    String appId = 'iCou3NxY8DGu48mH75chndFNGaa22QbT';
     String cityId = await getCityId(lat, lon, appId);
     String url =
         'http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=$appId';
@@ -27,7 +27,7 @@ class LocationData {
   }
 
   Future get3DaysData(lat, lon) async {
-    String appId = 'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1';
+    String appId = 'iCou3NxY8DGu48mH75chndFNGaa22QbT';
     String cityId = await getCityId(lat, lon, appId);
     String url =
         'http://dataservice.accuweather.com/forecasts/v1/daily/5day/$cityId?apikey=$appId&metric=true';

@@ -49,8 +49,8 @@ class HomeScreenState extends State<HomeScreen> {
     AccIconData accIconData = AccIconData.fromJson(widget.iconData);
     FinalData finalData = FinalData.getFinalData(widget, modeNumber);
     return Scaffold(
-      backgroundColor: Colors.lightBlue[600],
-      appBar: const MyAppBar(),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: MyAppBar(modeNumber: modeNumber),
       drawer: const MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -108,7 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: iconCreator.icon(iconNumber, 200),
             ),
             Card(
-              color: const Color.fromARGB(255, 51, 185, 247),
+              color: Theme.of(context).colorScheme.secondary,
               surfaceTintColor: Colors.white,
               shadowColor: Colors.black,
               child: Padding(
