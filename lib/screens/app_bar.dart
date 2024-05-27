@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/screens/info_screen.dart';
+import 'package:weather_application/screens/loading_screen.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -45,26 +46,38 @@ class MyAppBarState extends State<MyAppBar> {
             Icons.info_outlined,
             color: Colors.white,
           ),
-        )
-        // PopupMenuButton(
-        //   iconColor: Colors.white,
-        //   color: Colors.lightBlue[100],
-        //   itemBuilder: (context) => [
-        //     PopupMenuItem(
-        //       onTap: () {
-        //         Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //           return const InfoScreen();
-        //         }));
-        //       },
-        //       child: const Center(
-        //         child: Text(
-        //           style: TextStyle(color: Color.fromARGB(255, 3, 155, 229)),
-        //           "About  ",
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // )
+        ),
+        PopupMenuButton(
+          tooltip: 'Change mode',
+          iconColor: Colors.white,
+          color: Colors.lightBlue[100],
+          itemBuilder: (context) => [
+            CheckedPopupMenuItem(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoadingScreen(modeNumber: 1);
+                }));
+              },
+              child: const Text('Optimistic'),
+            ),
+            CheckedPopupMenuItem(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoadingScreen(modeNumber: 2);
+                }));
+              },
+              child: const Text('Average'),
+            ),
+            CheckedPopupMenuItem(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoadingScreen(modeNumber: 3);
+                }));
+              },
+              child: const Text('pessimistic'),
+            ),
+          ],
+        ),
       ],
     );
   }

@@ -8,6 +8,9 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return const MaterialApp(home: LoadingScreen());
+    return const MaterialApp(
+        home: LoadingScreen(
+      modeNumber: 2,
+    ));
   }
 }

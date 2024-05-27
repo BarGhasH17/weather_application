@@ -1,38 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:weather_application/services/final_data.dart';
 import 'drawer.dart';
 import 'app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_application/services/icon_generator.dart';
-import 'package:weather_application/services/fetching_data.dart';
+import 'package:weather_application/services/accweather_icon_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
-      {this.currentLocationWeather,
-      this.locationWeather,
+      {this.currentLocationWeatherS1,
+      this.locationWeatherS1,
+      this.locationWeatherS2,
+      this.locationWeatherS3,
+      this.iconData,
       this.cityName,
+      this.modeNumber,
       super.key});
-  final dynamic currentLocationWeather;
-  final dynamic locationWeather;
+  final dynamic currentLocationWeatherS1;
+  final dynamic locationWeatherS1;
+  final dynamic locationWeatherS2;
+  final dynamic locationWeatherS3;
+  final dynamic iconData;
   final dynamic cityName;
+  final dynamic modeNumber;
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
 class HomeScreenState extends State<HomeScreen> {
   var date = DateTime.now();
+  int? temperature;
+  late int iconNumber;
+  late String cityName;
+  late int modeNumber;
   IconCreator iconCreator = IconCreator();
   MyAppBar myAppBar = const MyAppBar();
 
   @override
   void initState() {
     super.initState();
-
-    updateUI(
-        widget.currentLocationWeather, widget.locationWeather, widget.cityName);
+    modeNumber = widget.modeNumber;
+    iconNumber = widget.currentLocationWeatherS1[0]['WeatherIcon'];
+    cityName = widget.cityName;
   }
 
   @override
   Widget build(BuildContext context) {
+    AccIconData accIconData = AccIconData.fromJson(widget.iconData);
+    FinalData finalData = FinalData.getFinalData(widget, modeNumber);
     return Scaffold(
       backgroundColor: Colors.lightBlue[600],
       appBar: const MyAppBar(),
@@ -46,7 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  city.toUpperCase(),
+                  cityName.toUpperCase(),
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -58,7 +73,7 @@ class HomeScreenState extends State<HomeScreen> {
                   textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
-                      '$temperature°',
+                      '${finalData.temperature}°',
                       style: const TextStyle(
                         fontSize: 80,
                         fontWeight: FontWeight.bold,
@@ -77,7 +92,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Text(
-                      "$maxTemperature°/$minTemperature°",
+                      "${finalData.maxTemperature}°/${finalData.minTemperature}°",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -105,33 +120,14 @@ class HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          iconCreator.icon(iconNumber1, 45),
+                          iconCreator.icon(accIconData.iconNumber1 ?? 0, 45),
                           Text(
-                            DateFormat('EEEE').format(day1),
+                            DateFormat('EEEE').format(finalData.day1 ?? date),
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 20),
                           ),
                           Text(
-                            "$maxTemperatureDay1°/$minTemperatureDay1°",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          iconCreator.icon(iconNumber2, 45),
-                          Text(
-                            DateFormat('EEEE').format(day2),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                          Text(
-                            "$maxTemperatureDay2°/$minTemperatureDay2°",
+                            "${finalData.maxTemperatureDay1}°/${finalData.minTemperatureDay1}°",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 20),
                           ),
@@ -143,16 +139,36 @@ class HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          iconCreator.icon(iconNumber3, 45),
+                          iconCreator.icon(accIconData.iconNumber2 ?? 0, 45),
+                          // : iconLink2 == '',
                           Text(
-                            DateFormat('EEEE').format(day3),
+                            DateFormat('EEEE').format(finalData.day2 ?? date),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
+                          ),
+                          Text(
+                            "${finalData.maxTemperatureDay2}°/${finalData.minTemperatureDay2}°",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          iconCreator.icon(accIconData.iconNumber3 ?? 0, 45),
+                          Text(
+                            DateFormat('EEEE').format(finalData.day3 ?? date),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
                           Text(
-                            "$maxTemperatureDay3°/$minTemperatureDay3°",
+                            "${finalData.maxTemperatureDay3}°/${finalData.minTemperatureDay3}°",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
