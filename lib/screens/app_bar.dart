@@ -27,7 +27,7 @@ class MyAppBarState extends State<MyAppBar> {
               Icons.location_city,
               color: Colors.white,
             ),
-            tooltip: "View cities",
+            tooltip: "Choose a city",
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const CityScreen();
@@ -54,6 +54,7 @@ class MyAppBarState extends State<MyAppBar> {
         //   ),
         // ),
         IconButton(
+          tooltip: 'Change mode',
           onPressed: () {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
           },
@@ -64,7 +65,7 @@ class MyAppBarState extends State<MyAppBar> {
         ),
         PopupMenuButton(
           constraints: const BoxConstraints.tightFor(width: 150),
-          tooltip: 'Change mode',
+          tooltip: 'Setting',
           iconColor: Colors.white,
           color: Theme.of(context).colorScheme.secondary,
           itemBuilder: (context) => [

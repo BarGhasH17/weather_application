@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_application/screens/app_bar.dart';
+import 'package:weather_application/screens/loading_screen.dart';
 
 class CityScreen extends StatefulWidget {
   const CityScreen({super.key});
@@ -9,6 +9,8 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  TextEditingController cityController = TextEditingController();
+  String? selectedCity;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +36,10 @@ class _CityScreenState extends State<CityScreen> {
               child: TextField(
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                controller: cityController,
                 decoration: const InputDecoration(
                   labelText: 'Enter a city name.',
                   labelStyle: TextStyle(color: Colors.white),
-                  // fillColor: Theme.of(context).colorScheme.onSurface,
                   hintText: 'City Name...',
                   hintStyle: TextStyle(color: Colors.white),
                   border: OutlineInputBorder(
@@ -49,13 +51,19 @@ class _CityScreenState extends State<CityScreen> {
             // Button
             ElevatedButton(
               onPressed: () {
-                // Handle button press here
-                // You can navigate to another screen or perform other actions
+                selectedCity = cityController.text;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoadingScreen(
+                    modeNumber: 2,
+                    isLocationMode: false,
+                    city: selectedCity,
+                  );
+                }));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(
                       Theme.of(context).colorScheme.primary)),
-              child: Text(
+              child: const Text(
                 'Get location',
                 style: TextStyle(color: Colors.white),
               ),
