@@ -42,17 +42,6 @@ class MyAppBarState extends State<MyAppBar> {
         "Weather",
       ),
       actions: [
-        // IconButton(
-        //   onPressed: () {
-        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return const InfoScreen();
-        //     }));
-        //   },
-        //   icon: const Icon(
-        //     Icons.info_outlined,
-        //     color: Colors.white,
-        //   ),
-        // ),
         IconButton(
           tooltip: 'Change mode',
           onPressed: () {

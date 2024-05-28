@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:weather_application/services/location.dart';
 
 class LocationData {
   String? cityName;
   int? temperature, iconNumber;
+  String appId = '44Tcy7AhVjpQ8wxKoUAoGFzaG4mcyMyy';
 
   Future getCityIdGeoLocation(lat, lon, appId) async {
     String url =
@@ -17,7 +17,6 @@ class LocationData {
   }
 
   Future getCityIdCityName(city, appId) async {
-    print(city);
     String url =
         'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=$appId&q=$city';
     Uri uri = Uri.parse(url);
@@ -42,12 +41,7 @@ class LocationData {
     return jsonDecode(res.body);
   }
 
-  Future getLocationData() async {
-    Location location = Location();
-    await location.getCurrentLocation();
-    double latitude = location.latitude;
-    double longitude = location.longitude;
-    String appId = '44Tcy7AhVjpQ8wxKoUAoGFzaG4mcyMyy';
+  Future getLocationData(latitude, longitude) async {
     String cityId = await getCityIdGeoLocation(latitude, longitude, appId);
     var currentData = await getCurrentData(cityId, appId);
     temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
@@ -57,7 +51,6 @@ class LocationData {
   }
 
   Future getLocationDataByCityName(city) async {
-    String appId = '44Tcy7AhVjpQ8wxKoUAoGFzaG4mcyMyy';
     var cityId = await getCityIdCityName(city, appId);
     var currentData = await getCurrentData(cityId, appId);
     temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();

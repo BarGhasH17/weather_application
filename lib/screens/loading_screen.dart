@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_application/screens/home_screen.dart';
+import 'package:weather_application/services/location.dart';
 import 'package:weather_application/services/location_data_from_accweather.dart'
     as accweather;
 import 'package:weather_application/services/location_data_from_weather_api.dart'
@@ -37,9 +38,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
     int? modeNumber = widget.modeNumber;
 
     Future(() async {
-      dynamic locationDataList = await locationData1.getLocationData();
-      dynamic locationDataWeatherApi = await locationData2.getLocationData();
-      dynamic locationDataOpenMeteo = await locationData3.getLocationData();
+      Location location = Location();
+      await location.getCurrentLocation();
+      double latitude = location.latitude;
+      double longitude = location.longitude;
+      dynamic locationDataList =
+          await locationData1.getLocationData(latitude, longitude);
+      dynamic locationDataWeatherApi =
+          await locationData2.getLocationData(latitude, longitude);
+      dynamic locationDataOpenMeteo =
+          await locationData3.getLocationData(latitude, longitude);
 
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context,
