@@ -1,13 +1,34 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 
 class LocationData {
   String? cityName;
   int? temperature, iconNumber;
-  String appId = '44Tcy7AhVjpQ8wxKoUAoGFzaG4mcyMyy';
+  List<String> appIds = [
+    '44Tcy7AhVjpQ8wxKoUAoGFzaG4mcyMyy',
+    'TyExDodJNvGGOcnkgx2XJjadEqxKGseu',
+    'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1',
+    'iCou3NxY8DGu48mH75chndFNGaa22QbT',
+    'bGfh8vLrLl6b5GJYZWOPAdNLnsudtCx1',
+    'uEB91XKHiyW5XLGhUeevAPpHALVgRxhf',
+    'vrONuBytoGZOzPrSlmkWF1JnJtWTW2bi',
+    'stP2MBDdw4Pi0FI3ehhg7UKjQXshc9u2',
+    'ZYjpgNB1G4TCYhaqsVN22AMoGi6LNycB',
+    '97oYwQLRJYd9NKODGWhrS3JuNsD3ObGq'
+  ];
+  Random random = Random();
+  String? appId; // = 'jzhD3sZTvQRuFK1RwG6UKdmxjeUBymI1';
 
-  Future getCityIdGeoLocation(lat, lon, appId) async {
+  void getAppId() {
+    Random random = Random();
+    appId = appIds[random.nextInt(7)];
+  }
+
+  Future getCityIdGeoLocation(lat, lon) async {
+    getAppId();
+    print(appId);
     String url =
         'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=$appId&q=$lat%2C$lon';
     Uri uri = Uri.parse(url);
@@ -16,7 +37,9 @@ class LocationData {
     return jsonDecode(res.body)["Key"];
   }
 
-  Future getCityIdCityName(city, appId) async {
+  Future getCityIdCityName(city) async {
+    getAppId();
+    print(appId);
     String url =
         'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=$appId&q=$city';
     Uri uri = Uri.parse(url);
@@ -25,7 +48,9 @@ class LocationData {
     return jsonDecode(res.body)[0]['Key'];
   }
 
-  Future getCurrentData(cityId, appId) async {
+  Future getCurrentData(cityId) async {
+    getAppId();
+    print(appId);
     String url =
         'http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=$appId';
     Uri uri = Uri.parse(url);
@@ -33,7 +58,9 @@ class LocationData {
     return jsonDecode(res.body);
   }
 
-  Future get3DaysData(cityId, appId) async {
+  Future get3DaysData(cityId) async {
+    getAppId();
+    print(appId);
     String url =
         'http://dataservice.accuweather.com/forecasts/v1/daily/5day/$cityId?apikey=$appId&metric=true';
     Uri uri = Uri.parse(url);
@@ -42,20 +69,20 @@ class LocationData {
   }
 
   Future getLocationData(latitude, longitude) async {
-    String cityId = await getCityIdGeoLocation(latitude, longitude, appId);
-    var currentData = await getCurrentData(cityId, appId);
+    String cityId = await getCityIdGeoLocation(latitude, longitude);
+    var currentData = await getCurrentData(cityId);
     temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
     iconNumber = currentData[0]['WeatherIcon'];
-    var data = await get3DaysData(cityId, appId);
+    var data = await get3DaysData(cityId);
     return [currentData, data, cityName];
   }
 
   Future getLocationDataByCityName(city) async {
-    var cityId = await getCityIdCityName(city, appId);
-    var currentData = await getCurrentData(cityId, appId);
+    var cityId = await getCityIdCityName(city);
+    var currentData = await getCurrentData(cityId);
     temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
     iconNumber = currentData[0]['WeatherIcon'];
-    var data = await get3DaysData(cityId, appId);
+    var data = await get3DaysData(cityId);
     return [currentData, data, cityName];
   }
 }

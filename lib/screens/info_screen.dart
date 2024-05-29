@@ -11,9 +11,9 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 3, 155, 229),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue[500],
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
@@ -23,23 +23,23 @@ class _InfoScreenState extends State<InfoScreen> {
           "Weather",
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(
-              image: AssetImage('assets/icons/Weather1.png'),
+            const Image(
+              image: AssetImage('assets/icons/Weather.png'),
               height: 200,
             ),
             Text(
               'Version 0.0.1',
               style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 179, 229, 252)),
+                  fontSize: 20, color: Theme.of(context).colorScheme.tertiary),
             ),
             Text(
               '© 2024',
               style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 179, 229, 252)),
+                  fontSize: 20, color: Theme.of(context).colorScheme.tertiary),
             ),
           ],
         ),

@@ -16,6 +16,7 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const LoadingScreen(
         modeNumber: 2,
       ),
