@@ -23,12 +23,10 @@ class LocationData {
 
   void getAppId() {
     Random random = Random();
-    appId = appIds[random.nextInt(7)];
+    appId = appIds[random.nextInt(10)];
   }
 
   Future getCityIdGeoLocation(lat, lon) async {
-    getAppId();
-    print(appId);
     String url =
         'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=$appId&q=$lat%2C$lon';
     Uri uri = Uri.parse(url);
@@ -38,8 +36,6 @@ class LocationData {
   }
 
   Future getCityIdCityName(city) async {
-    getAppId();
-    print(appId);
     String url =
         'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=$appId&q=$city';
     Uri uri = Uri.parse(url);
@@ -49,8 +45,6 @@ class LocationData {
   }
 
   Future getCurrentData(cityId) async {
-    getAppId();
-    print(appId);
     String url =
         'http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=$appId';
     Uri uri = Uri.parse(url);
@@ -59,8 +53,6 @@ class LocationData {
   }
 
   Future get3DaysData(cityId) async {
-    getAppId();
-    print(appId);
     String url =
         'http://dataservice.accuweather.com/forecasts/v1/daily/5day/$cityId?apikey=$appId&metric=true';
     Uri uri = Uri.parse(url);
@@ -69,20 +61,32 @@ class LocationData {
   }
 
   Future getLocationData(latitude, longitude) async {
-    String cityId = await getCityIdGeoLocation(latitude, longitude);
-    var currentData = await getCurrentData(cityId);
-    temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
-    iconNumber = currentData[0]['WeatherIcon'];
-    var data = await get3DaysData(cityId);
-    return [currentData, data, cityName];
+    while (true) {
+      getAppId();
+      try {
+        String cityId = await getCityIdGeoLocation(latitude, longitude);
+        var currentData = await getCurrentData(cityId);
+        var data = await get3DaysData(cityId);
+        temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
+        iconNumber = currentData[0]['WeatherIcon'];
+        return [currentData, data, cityName];
+        // ignore: empty_catches
+      } catch (e) {}
+    }
   }
 
   Future getLocationDataByCityName(city) async {
-    var cityId = await getCityIdCityName(city);
-    var currentData = await getCurrentData(cityId);
-    temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
-    iconNumber = currentData[0]['WeatherIcon'];
-    var data = await get3DaysData(cityId);
-    return [currentData, data, cityName];
+    while (true) {
+      getAppId();
+      try {
+        var cityId = await getCityIdCityName(city);
+        var currentData = await getCurrentData(cityId);
+        var data = await get3DaysData(cityId);
+        temperature = currentData[0]['Temperature']['Metric']['Value'].toInt();
+        iconNumber = currentData[0]['WeatherIcon'];
+        return [currentData, data, cityName];
+        // ignore: empty_catches
+      } catch (e) {}
+    }
   }
 }

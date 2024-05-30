@@ -6,8 +6,9 @@ import 'package:weather_application/screens/info_screen.dart';
 import 'package:weather_application/screens/loading_screen.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBar({this.modeNumber, super.key});
+  const MyAppBar({this.modeNumber, this.widget, super.key});
   final dynamic modeNumber;
+  final dynamic widget;
 
   @override
   State<MyAppBar> createState() => MyAppBarState();
@@ -63,7 +64,10 @@ class MyAppBarState extends State<MyAppBar> {
               onTap: () {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
-                  return const LoadingScreen(modeNumber: 1);
+                  return LoadingScreen(
+                      modeNumber: 1,
+                      isLocationMode: widget.widget.isLocationMode,
+                      city: widget.widget.city);
                 }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text(
@@ -76,7 +80,10 @@ class MyAppBarState extends State<MyAppBar> {
               onTap: () {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
-                  return const LoadingScreen(modeNumber: 2);
+                  return LoadingScreen(
+                      modeNumber: 2,
+                      isLocationMode: widget.widget.isLocationMode,
+                      city: widget.widget.city);
                 }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text(
@@ -89,7 +96,10 @@ class MyAppBarState extends State<MyAppBar> {
               onTap: () {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
-                  return const LoadingScreen(modeNumber: 3);
+                  return LoadingScreen(
+                      modeNumber: 3,
+                      isLocationMode: widget.widget.isLocationMode,
+                      city: widget.widget.city);
                 }), ModalRoute.withName("/loading_screen"));
               },
               child: const Text(

@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
       this.iconData,
       this.cityName,
       this.modeNumber,
+      this.widget,
       super.key});
   final dynamic currentLocationWeatherS1;
   final dynamic locationWeatherS1;
@@ -22,6 +23,7 @@ class HomeScreen extends StatefulWidget {
   final dynamic iconData;
   final dynamic cityName;
   final dynamic modeNumber;
+  final dynamic widget;
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -49,7 +51,10 @@ class HomeScreenState extends State<HomeScreen> {
     FinalData finalData = FinalData.getFinalData(widget, modeNumber);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: MyAppBar(modeNumber: modeNumber),
+      appBar: MyAppBar(
+        modeNumber: modeNumber,
+        widget: widget.widget,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
         child: Column(

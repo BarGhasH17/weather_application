@@ -90,6 +90,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           iconData: locationDataList[1],
           cityName: locationDataList[2],
           modeNumber: modeNumber,
+          widget: widget,
         );
       }), ModalRoute.withName("/home_screen"));
     });
