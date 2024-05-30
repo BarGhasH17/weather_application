@@ -4,6 +4,7 @@ import 'app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_application/services/icon_generator.dart';
 import 'package:weather_application/services/accweather_icon_data.dart';
+import 'package:weather_application/screens/loading_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -49,6 +50,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     AccIconData accIconData = AccIconData.fromJson(widget.iconData);
     FinalData finalData = FinalData.getFinalData(widget, modeNumber);
+    List<String> modeNames = ['Optimistic', 'Average', 'Pessimistic'];
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: MyAppBar(
@@ -63,17 +65,92 @@ class HomeScreenState extends State<HomeScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  cityName.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      cityName.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 27,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PopupMenuButton(
+                      offset: const Offset(100, 0),
+                      // constraints: const BoxConstraints.tightFor(width: 150),
+                      tooltip: 'Setting',
+                      iconColor: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
+                      itemBuilder: (context) => [
+                        CheckedPopupMenuItem(
+                          checked: widget.modeNumber == 1 ? true : false,
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) {
+                              return LoadingScreen(
+                                  modeNumber: 1,
+                                  isLocationMode: widget.widget.isLocationMode,
+                                  city: widget.widget.city);
+                            }), ModalRoute.withName("/loading_screen"));
+                          },
+                          child: const Text(
+                            'Optimistic',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        CheckedPopupMenuItem(
+                          checked: widget.modeNumber == 2 ? true : false,
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) {
+                              return LoadingScreen(
+                                  modeNumber: 2,
+                                  isLocationMode: widget.widget.isLocationMode,
+                                  city: widget.widget.city);
+                            }), ModalRoute.withName("/loading_screen"));
+                          },
+                          child: const Text(
+                            'Average',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        CheckedPopupMenuItem(
+                          checked: widget.modeNumber == 3 ? true : false,
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) {
+                              return LoadingScreen(
+                                  modeNumber: 3,
+                                  isLocationMode: widget.widget.isLocationMode,
+                                  city: widget.widget.city);
+                            }), ModalRoute.withName("/loading_screen"));
+                          },
+                          child: const Text(
+                            'Pessimistic',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            modeNames[modeNumber - 1],
+                            style: const TextStyle(fontSize: 17),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  // textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
                       '${finalData.temperature}°',
@@ -84,22 +161,38 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10, left: 10),
-                      child: Text(
-                        DateFormat('EEEE').format(date),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "${finalData.maxTemperature}°/${finalData.minTemperature}°",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      padding: const EdgeInsets.only(left: 10, bottom: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Text(
+                                  DateFormat('EEEE').format(date),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "${finalData.maxTemperature}°/${finalData.minTemperature}°",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            finalData.weatherText!,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ),
                     ),
                   ],

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_application/Theme/theme_provider.dart';
 import 'package:weather_application/screens/city_screen.dart';
 import 'package:weather_application/screens/info_screen.dart';
-import 'package:weather_application/screens/loading_screen.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({this.modeNumber, this.widget, super.key});
@@ -53,73 +52,17 @@ class MyAppBarState extends State<MyAppBar> {
             color: Colors.white,
           ),
         ),
-        PopupMenuButton(
-          constraints: const BoxConstraints.tightFor(width: 150),
-          tooltip: 'Setting',
-          iconColor: Colors.white,
-          color: Theme.of(context).colorScheme.secondary,
-          itemBuilder: (context) => [
-            CheckedPopupMenuItem(
-              checked: widget.modeNumber == 1 ? true : false,
-              onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return LoadingScreen(
-                      modeNumber: 1,
-                      isLocationMode: widget.widget.isLocationMode,
-                      city: widget.widget.city);
-                }), ModalRoute.withName("/loading_screen"));
-              },
-              child: const Text(
-                'Optimistic',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            CheckedPopupMenuItem(
-              checked: widget.modeNumber == 2 ? true : false,
-              onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return LoadingScreen(
-                      modeNumber: 2,
-                      isLocationMode: widget.widget.isLocationMode,
-                      city: widget.widget.city);
-                }), ModalRoute.withName("/loading_screen"));
-              },
-              child: const Text(
-                'Average',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            CheckedPopupMenuItem(
-              checked: widget.modeNumber == 3 ? true : false,
-              onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return LoadingScreen(
-                      modeNumber: 3,
-                      isLocationMode: widget.widget.isLocationMode,
-                      city: widget.widget.city);
-                }), ModalRoute.withName("/loading_screen"));
-              },
-              child: const Text(
-                'pessimistic',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            PopupMenuItem(
-              padding: const EdgeInsets.only(left: 50),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const InfoScreen();
-                }));
-              },
-              child: const Text(
-                'About  ',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
+        IconButton(
+          tooltip: 'About',
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const InfoScreen();
+            }));
+          },
+          icon: const Icon(
+            Icons.info_outline,
+            color: Colors.white,
+          ),
         ),
       ],
     );

@@ -16,6 +16,7 @@ class FinalData {
     this.day1,
     this.day2,
     this.day3,
+    this.weatherText,
   });
   int? temperature;
   int? maxTemperature,
@@ -27,6 +28,7 @@ class FinalData {
       minTemperatureDay2,
       minTemperatureDay3;
   DateTime? day1, day2, day3;
+  String? weatherText;
 
   int getMax(l) {
     l.sort();
@@ -53,6 +55,8 @@ class FinalData {
     day1 = accWeatherData.day1;
     day2 = accWeatherData.day2;
     day3 = accWeatherData.day3;
+    weatherText = widget.currentLocationWeatherS1[0]['WeatherText'];
+
     try {
       if (modeNumber == 1) {
         temperature = getMax([
