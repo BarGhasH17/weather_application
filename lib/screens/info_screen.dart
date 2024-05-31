@@ -32,7 +32,7 @@ class _InfoScreenState extends State<InfoScreen> {
               height: 200,
             ),
             Text(
-              'Version 0.0.1',
+              'Version 1.0.0',
               style: TextStyle(
                   fontSize: 20, color: Theme.of(context).colorScheme.tertiary),
             ),

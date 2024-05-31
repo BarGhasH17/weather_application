@@ -1,48 +1,133 @@
 class AccWeatherData {
-  AccWeatherData({
-    this.temperature,
-    this.maxTemperature,
-    this.maxTemperatureDay1,
-    this.maxTemperatureDay2,
-    this.maxTemperatureDay3,
-    this.minTemperature,
-    this.minTemperatureDay1,
-    this.minTemperatureDay2,
-    this.minTemperatureDay3,
-    this.day1,
-    this.day2,
-    this.day3,
-  });
-  int? temperature;
-  int? maxTemperature,
-      maxTemperatureDay1,
-      maxTemperatureDay2,
-      maxTemperatureDay3;
-  int? minTemperature,
-      minTemperatureDay1,
-      minTemperatureDay2,
-      minTemperatureDay3;
-  DateTime? day1, day2, day3;
+  final List<DailyForecast> dailyForecasts;
 
-  AccWeatherData.fromJson(Map<String, dynamic> json) {
-    maxTemperature =
-        json['DailyForecasts'][0]['Temperature']['Maximum']['Value'].toInt();
-    minTemperature =
-        json['DailyForecasts'][0]['Temperature']['Minimum']['Value'].toInt();
-    day1 = DateTime.parse(json['DailyForecasts'][1]['Date']);
-    day2 = DateTime.parse(json['DailyForecasts'][2]['Date']);
-    day3 = DateTime.parse(json['DailyForecasts'][3]['Date']);
-    maxTemperatureDay1 =
-        json['DailyForecasts'][1]['Temperature']['Maximum']['Value'].toInt();
-    minTemperatureDay1 =
-        json['DailyForecasts'][1]['Temperature']['Minimum']['Value'].toInt();
-    maxTemperatureDay2 =
-        json['DailyForecasts'][2]['Temperature']['Maximum']['Value'].toInt();
-    minTemperatureDay2 =
-        json['DailyForecasts'][2]['Temperature']['Minimum']['Value'].toInt();
-    maxTemperatureDay3 =
-        json['DailyForecasts'][3]['Temperature']['Maximum']['Value'].toInt();
-    minTemperatureDay3 =
-        json['DailyForecasts'][3]['Temperature']['Minimum']['Value'].toInt();
+  AccWeatherData({
+    required this.dailyForecasts,
+  });
+
+  factory AccWeatherData.fromJson(Map<String, dynamic> json) {
+    return AccWeatherData(
+      dailyForecasts: (json['DailyForecasts'] as List)
+          .map((i) => DailyForecast.fromJson(i))
+          .toList(),
+    );
+  }
+}
+
+class DailyForecast {
+  final DateTime date;
+  final int epochDate;
+  final Temperature temperature;
+  final Day day;
+  final Night night;
+  final List<String> sources;
+  final String mobileLink;
+  final String link;
+
+  DailyForecast({
+    required this.date,
+    required this.epochDate,
+    required this.temperature,
+    required this.day,
+    required this.night,
+    required this.sources,
+    required this.mobileLink,
+    required this.link,
+  });
+
+  factory DailyForecast.fromJson(Map<String, dynamic> json) {
+    return DailyForecast(
+      date: DateTime.parse(json['Date']),
+      epochDate: json['EpochDate'],
+      temperature: Temperature.fromJson(json['Temperature']),
+      day: Day.fromJson(json['Day']),
+      night: Night.fromJson(json['Night']),
+      sources: List<String>.from(json['Sources']),
+      mobileLink: json['MobileLink'],
+      link: json['Link'],
+    );
+  }
+}
+
+class Temperature {
+  final TempDetail minimum;
+  final TempDetail maximum;
+
+  Temperature({
+    required this.minimum,
+    required this.maximum,
+  });
+
+  factory Temperature.fromJson(Map<String, dynamic> json) {
+    return Temperature(
+      minimum: TempDetail.fromJson(json['Minimum']),
+      maximum: TempDetail.fromJson(json['Maximum']),
+    );
+  }
+}
+
+class TempDetail {
+  final int value;
+  final String unit;
+  final int unitType;
+
+  TempDetail({
+    required this.value,
+    required this.unit,
+    required this.unitType,
+  });
+
+  factory TempDetail.fromJson(Map<String, dynamic> json) {
+    return TempDetail(
+      value: json['Value'].toInt(),
+      unit: json['Unit'],
+      unitType: json['UnitType'],
+    );
+  }
+}
+
+class Day {
+  final int icon;
+  final String iconPhrase;
+  final bool hasPrecipitation;
+  final String? precipitationType;
+  final String? precipitationIntensity;
+
+  Day({
+    required this.icon,
+    required this.iconPhrase,
+    required this.hasPrecipitation,
+    this.precipitationType,
+    this.precipitationIntensity,
+  });
+
+  factory Day.fromJson(Map<String, dynamic> json) {
+    return Day(
+      icon: json['Icon'],
+      iconPhrase: json['IconPhrase'],
+      hasPrecipitation: json['HasPrecipitation'],
+      precipitationType: json['PrecipitationType'],
+      precipitationIntensity: json['PrecipitationIntensity'],
+    );
+  }
+}
+
+class Night {
+  final int icon;
+  final String iconPhrase;
+  final bool hasPrecipitation;
+
+  Night({
+    required this.icon,
+    required this.iconPhrase,
+    required this.hasPrecipitation,
+  });
+
+  factory Night.fromJson(Map<String, dynamic> json) {
+    return Night(
+      icon: json['Icon'],
+      iconPhrase: json['IconPhrase'],
+      hasPrecipitation: json['HasPrecipitation'],
+    );
   }
 }

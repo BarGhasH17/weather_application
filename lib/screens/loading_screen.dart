@@ -101,11 +101,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const Center(
-        child: SpinKitThreeBounce(
-          color: Colors.white,
-          size: 50,
-        ),
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image(
+            image: AssetImage('assets/icons/Weather.png'),
+            height: 200,
+          ),
+          SpinKitThreeBounce(
+            color: Colors.white,
+            size: 50,
+          ),
+        ],
       ),
     );
   }

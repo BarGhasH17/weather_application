@@ -1,41 +1,125 @@
 class OpenMeteoData {
-  OpenMeteoData({
-    this.temperature,
-    this.maxTemperature,
-    this.maxTemperatureDay1,
-    this.maxTemperatureDay2,
-    this.maxTemperatureDay3,
-    this.minTemperature,
-    this.minTemperatureDay1,
-    this.minTemperatureDay2,
-    this.minTemperatureDay3,
-    this.day1,
-    this.day2,
-    this.day3,
-  });
-  int? temperature;
-  int? maxTemperature,
-      maxTemperatureDay1,
-      maxTemperatureDay2,
-      maxTemperatureDay3;
-  int? minTemperature,
-      minTemperatureDay1,
-      minTemperatureDay2,
-      minTemperatureDay3;
-  String? day1, day2, day3;
+  final double latitude;
+  final double longitude;
+  final double generationtimeMs;
+  final int utcOffsetSeconds;
+  final String timezone;
+  final String timezoneAbbreviation;
+  final double elevation;
+  final CurrentUnits currentUnits;
+  final Current current;
+  final DailyUnits dailyUnits;
+  final Daily daily;
 
-  OpenMeteoData.jsonFrom(Map<String, dynamic> json) {
-    temperature = json['current']['temperature_2m'].toInt();
-    maxTemperature = json['daily']['temperature_2m_max'][0].toInt();
-    maxTemperatureDay1 = json['daily']['temperature_2m_max'][1].toInt();
-    maxTemperatureDay2 = json['daily']['temperature_2m_max'][2].toInt();
-    maxTemperatureDay3 = json['daily']['temperature_2m_max'][3].toInt();
-    minTemperature = json['daily']['temperature_2m_min'][0].toInt();
-    minTemperatureDay1 = json['daily']['temperature_2m_min'][1].toInt();
-    minTemperatureDay2 = json['daily']['temperature_2m_min'][2].toInt();
-    minTemperatureDay3 = json['daily']['temperature_2m_min'][3].toInt();
-    day1 = json['daily']['time'][1];
-    day2 = json['daily']['time'][2];
-    day3 = json['daily']['time'][3];
+  OpenMeteoData({
+    required this.latitude,
+    required this.longitude,
+    required this.generationtimeMs,
+    required this.utcOffsetSeconds,
+    required this.timezone,
+    required this.timezoneAbbreviation,
+    required this.elevation,
+    required this.currentUnits,
+    required this.current,
+    required this.dailyUnits,
+    required this.daily,
+  });
+
+  factory OpenMeteoData.fromJson(Map<String, dynamic> json) {
+    return OpenMeteoData(
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      generationtimeMs: json['generationtime_ms'],
+      utcOffsetSeconds: json['utc_offset_seconds'],
+      timezone: json['timezone'],
+      timezoneAbbreviation: json['timezone_abbreviation'],
+      elevation: json['elevation'],
+      currentUnits: CurrentUnits.fromJson(json['current_units']),
+      current: Current.fromJson(json['current']),
+      dailyUnits: DailyUnits.fromJson(json['daily_units']),
+      daily: Daily.fromJson(json['daily']),
+    );
+  }
+}
+
+class CurrentUnits {
+  final String time;
+  final String interval;
+  final String temperature2m;
+
+  CurrentUnits({
+    required this.time,
+    required this.interval,
+    required this.temperature2m,
+  });
+
+  factory CurrentUnits.fromJson(Map<String, dynamic> json) {
+    return CurrentUnits(
+      time: json['time'],
+      interval: json['interval'],
+      temperature2m: json['temperature_2m'],
+    );
+  }
+}
+
+class Current {
+  final String time;
+  final int interval;
+  final int temperature2m;
+
+  Current({
+    required this.time,
+    required this.interval,
+    required this.temperature2m,
+  });
+
+  factory Current.fromJson(Map<String, dynamic> json) {
+    return Current(
+      time: json['time'],
+      interval: json['interval'],
+      temperature2m: json['temperature_2m'].toInt(),
+    );
+  }
+}
+
+class DailyUnits {
+  final String time;
+  final String temperature2mMax;
+  final String temperature2mMin;
+
+  DailyUnits({
+    required this.time,
+    required this.temperature2mMax,
+    required this.temperature2mMin,
+  });
+
+  factory DailyUnits.fromJson(Map<String, dynamic> json) {
+    return DailyUnits(
+      time: json['time'],
+      temperature2mMax: json['temperature_2m_max'],
+      temperature2mMin: json['temperature_2m_min'],
+    );
+  }
+}
+
+class Daily {
+  final List<String> time;
+  final List<int> temperature2mMax;
+  final List<int> temperature2mMin;
+
+  Daily({
+    required this.time,
+    required this.temperature2mMax,
+    required this.temperature2mMin,
+  });
+
+  factory Daily.fromJson(Map<String, dynamic> json) {
+    return Daily(
+      time: List<String>.from(json['time']),
+      temperature2mMax:
+          List<int>.from(json['temperature_2m_max'].map((x) => x.toInt())),
+      temperature2mMin:
+          List<int>.from(json['temperature_2m_min'].map((x) => x.toInt())),
+    );
   }
 }
