@@ -57,229 +57,438 @@ class HomeScreenState extends State<HomeScreen> {
         modeNumber: modeNumber,
         widget: widget.widget,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      cityName.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 27,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PopupMenuButton(
-                      offset: const Offset(100, 0),
-                      // constraints: const BoxConstraints.tightFor(width: 150),
-                      tooltip: 'Setting',
-                      iconColor: Colors.white,
-                      color: Theme.of(context).colorScheme.secondary,
-                      itemBuilder: (context) => [
-                        CheckedPopupMenuItem(
-                          checked: widget.modeNumber == 1 ? true : false,
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (context) {
-                              return LoadingScreen(
-                                  modeNumber: 1,
-                                  isLocationMode: widget.widget.isLocationMode,
-                                  city: widget.widget.city);
-                            }), ModalRoute.withName("/loading_screen"));
-                          },
-                          child: const Text(
-                            'Optimistic',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        CheckedPopupMenuItem(
-                          checked: widget.modeNumber == 2 ? true : false,
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (context) {
-                              return LoadingScreen(
-                                  modeNumber: 2,
-                                  isLocationMode: widget.widget.isLocationMode,
-                                  city: widget.widget.city);
-                            }), ModalRoute.withName("/loading_screen"));
-                          },
-                          child: const Text(
-                            'Average',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        CheckedPopupMenuItem(
-                          checked: widget.modeNumber == 3 ? true : false,
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (context) {
-                              return LoadingScreen(
-                                  modeNumber: 3,
-                                  isLocationMode: widget.widget.isLocationMode,
-                                  city: widget.widget.city);
-                            }), ModalRoute.withName("/loading_screen"));
-                          },
-                          child: const Text(
-                            'Pessimistic',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                      child: Row(
+      body: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            modeNames[modeNumber - 1],
-                            style: const TextStyle(fontSize: 17),
+                            cityName.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 27,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
-                          Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  // textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      '${finalData.temperature}°',
-                      style: const TextStyle(
-                        fontSize: 80,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, bottom: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Text(
-                                  DateFormat('EEEE').format(date),
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                          PopupMenuButton(
+                            offset: const Offset(100, 0),
+                            // constraints: const BoxConstraints.tightFor(width: 150),
+                            tooltip: 'Setting',
+                            iconColor: Colors.white,
+                            color: Theme.of(context).colorScheme.secondary,
+                            itemBuilder: (context) => [
+                              CheckedPopupMenuItem(
+                                checked: widget.modeNumber == 1 ? true : false,
+                                onTap: () {
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return LoadingScreen(
+                                        modeNumber: 1,
+                                        isLocationMode:
+                                            widget.widget.isLocationMode,
+                                        city: widget.widget.city);
+                                  }), ModalRoute.withName("/loading_screen"));
+                                },
+                                child: const Text(
+                                  'Optimistic',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                              Text(
-                                "${finalData.maxTemperature}°/${finalData.minTemperature}°",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              CheckedPopupMenuItem(
+                                checked: widget.modeNumber == 2 ? true : false,
+                                onTap: () {
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return LoadingScreen(
+                                        modeNumber: 2,
+                                        isLocationMode:
+                                            widget.widget.isLocationMode,
+                                        city: widget.widget.city);
+                                  }), ModalRoute.withName("/loading_screen"));
+                                },
+                                child: const Text(
+                                  'Average',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              CheckedPopupMenuItem(
+                                checked: widget.modeNumber == 3 ? true : false,
+                                onTap: () {
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return LoadingScreen(
+                                        modeNumber: 3,
+                                        isLocationMode:
+                                            widget.widget.isLocationMode,
+                                        city: widget.widget.city);
+                                  }), ModalRoute.withName("/loading_screen"));
+                                },
+                                child: const Text(
+                                  'Pessimistic',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ],
-                          ),
-                          Text(
-                            finalData.weatherText!,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 200,
-              child: iconCreator.icon(iconNumber, 200),
-            ),
-            Card(
-              color: Theme.of(context).colorScheme.secondary,
-              surfaceTintColor: Colors.white,
-              shadowColor: Colors.black,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          iconCreator.icon(accIconData.iconNumber1 ?? 0, 45),
-                          Text(
-                            DateFormat('EEEE').format(finalData.day1 ?? date),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                          Text(
-                            "${finalData.maxTemperatureDay1}°/${finalData.minTemperatureDay1}°",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          iconCreator.icon(accIconData.iconNumber2 ?? 0, 45),
-                          // : iconLink2 == '',
-                          Text(
-                            DateFormat('EEEE').format(finalData.day2 ?? date),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                          Text(
-                            "${finalData.maxTemperatureDay2}°/${finalData.minTemperatureDay2}°",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          iconCreator.icon(accIconData.iconNumber3 ?? 0, 45),
-                          Text(
-                            DateFormat('EEEE').format(finalData.day3 ?? date),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            "${finalData.maxTemperatureDay3}°/${finalData.minTemperatureDay3}°",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  modeNames[modeNumber - 1],
+                                  style: const TextStyle(fontSize: 17),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down_outlined,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            '${finalData.temperature}°',
+                            style: const TextStyle(
+                              fontSize: 80,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10, bottom: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        DateFormat('EEEE').format(date),
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "${finalData.maxTemperature}°/${finalData.minTemperature}°",
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  finalData.weatherText!,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    height: 200,
+                    child: iconCreator.icon(iconNumber, 200),
+                  ),
+                  const SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Card(
+                        color: Theme.of(context).colorScheme.secondary,
+                        surfaceTintColor: Colors.white,
+                        shadowColor: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            width: 135,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Image(
+                                  image: AssetImage(
+                                      'assets/icons/feel-like-1.png'),
+                                  color: Colors.white,
+                                  height: 40,
+                                ),
+                                const Text(
+                                  'Feels like',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                Text(
+                                  '${finalData.feelsLike}°',
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 30),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Theme.of(context).colorScheme.secondary,
+                        surfaceTintColor: Colors.white,
+                        shadowColor: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            width: 135,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Image(
+                                  image: AssetImage('assets/icons/wind.png'),
+                                  color: Colors.white,
+                                  height: 40,
+                                ),
+                                const Text(
+                                  'Wind NW',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: [
+                                    Text(
+                                      '${finalData.windSpeed} ',
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 30),
+                                    ),
+                                    const Text(
+                                      'Km/h',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Card(
+                        color: Theme.of(context).colorScheme.secondary,
+                        surfaceTintColor: Colors.white,
+                        shadowColor: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            width: 135,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Image(
+                                  image:
+                                      AssetImage('assets/icons/humidity.png'),
+                                  color: Colors.white,
+                                  height: 40,
+                                ),
+                                const Text(
+                                  'Humidity',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                Text(
+                                  '${finalData.humidity}%',
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 30),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Theme.of(context).colorScheme.secondary,
+                        surfaceTintColor: Colors.white,
+                        shadowColor: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SizedBox(
+                            width: 135,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Image(
+                                  image: AssetImage('assets/icons/uv.png'),
+                                  height: 40,
+                                ),
+                                const Text(
+                                  'UV Index',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: [
+                                    Text(
+                                      '${finalData.uvIndex}',
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 30),
+                                    ),
+                                    const Text(
+                                      'm',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Card(
+                    color: Theme.of(context).colorScheme.secondary,
+                    surfaceTintColor: Colors.white,
+                    shadowColor: Colors.black,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                iconCreator.icon(
+                                    accIconData.iconNumber1 ?? 0, 40),
+                                Text(
+                                  DateFormat('EEEE')
+                                      .format(finalData.day1 ?? date),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                Text(
+                                  "${finalData.maxTemperatureDay1}°/${finalData.minTemperatureDay1}°",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                iconCreator.icon(
+                                    accIconData.iconNumber2 ?? 0, 40),
+                                // : iconLink2 == '',
+                                Text(
+                                  DateFormat('EEEE')
+                                      .format(finalData.day2 ?? date),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                Text(
+                                  "${finalData.maxTemperatureDay2}°/${finalData.minTemperatureDay2}°",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                iconCreator.icon(
+                                    accIconData.iconNumber3 ?? 0, 40),
+                                Text(
+                                  DateFormat('EEEE')
+                                      .format(finalData.day3 ?? date),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  "${finalData.maxTemperatureDay3}°/${finalData.minTemperatureDay3}°",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                iconCreator.icon(
+                                    accIconData.iconNumber4 ?? 0, 40),
+                                Text(
+                                  DateFormat('EEEE')
+                                      .format(finalData.day4 ?? date),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  "${finalData.maxTemperatureDay4}°/${finalData.minTemperatureDay4}°",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    'Weather',
+                    style: TextStyle(color: Colors.white60, fontSize: 20),
+                  )
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
+            );
+          }),
     );
   }
 }

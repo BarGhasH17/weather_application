@@ -79,7 +79,7 @@ class Current {
   int isDay;
   Condition condition;
   double windMph;
-  double windKph;
+  int windKph;
   int windDegree;
   String windDir;
   double pressureMb;
@@ -88,7 +88,7 @@ class Current {
   double precipIn;
   int humidity;
   int cloud;
-  double feelslikeC;
+  int feelslikeC;
   double feelslikeF;
   double windchillC;
   double windchillF;
@@ -98,7 +98,7 @@ class Current {
   double dewpointF;
   double visKm;
   double visMiles;
-  double uv;
+  int uv;
   double gustMph;
   double gustKph;
 
@@ -143,7 +143,7 @@ class Current {
       isDay: json['is_day'],
       condition: Condition.fromJson(json['condition']),
       windMph: json['wind_mph'],
-      windKph: json['wind_kph'],
+      windKph: json['wind_kph'].toInt(),
       windDegree: json['wind_degree'],
       windDir: json['wind_dir'],
       pressureMb: json['pressure_mb'],
@@ -152,7 +152,7 @@ class Current {
       precipIn: json['precip_in'],
       humidity: json['humidity'],
       cloud: json['cloud'],
-      feelslikeC: json['feelslike_c'],
+      feelslikeC: json['feelslike_c'].toInt(),
       feelslikeF: json['feelslike_f'],
       windchillC: json['windchill_c'],
       windchillF: json['windchill_f'],
@@ -162,7 +162,7 @@ class Current {
       dewpointF: json['dewpoint_f'],
       visKm: json['vis_km'],
       visMiles: json['vis_miles'],
-      uv: json['uv'],
+      uv: json['uv'].toInt(),
       gustMph: json['gust_mph'],
       gustKph: json['gust_kph'],
     );
