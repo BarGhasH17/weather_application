@@ -53,171 +53,191 @@ class HomeScreenState extends State<HomeScreen> {
     List<String> modeNames = ['Optimistic', 'Average', 'Pessimistic'];
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      // Getting the AppBar from app_bar.dart.
       appBar: MyAppBar(
         modeNumber: modeNumber,
         widget: widget.widget,
       ),
+      // Adding the the functionallity of scrolling using ListView widget.
       body: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            cityName.toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: 27,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          // Adding a padding to the whole page.
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            // Column that holds the whole page.
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // Start the top part of the page.
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Row that holds the city name and the Perspective menu.
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // City name
+                        Text(
+                          cityName.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          PopupMenuButton(
-                            offset: const Offset(100, 0),
-                            // constraints: const BoxConstraints.tightFor(width: 150),
-                            tooltip: 'Setting',
-                            iconColor: Colors.white,
-                            color: Theme.of(context).colorScheme.secondary,
-                            itemBuilder: (context) => [
-                              CheckedPopupMenuItem(
-                                checked: widget.modeNumber == 1 ? true : false,
-                                onTap: () {
-                                  Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LoadingScreen(
-                                        modeNumber: 1,
-                                        isLocationMode:
-                                            widget.widget.isLocationMode,
-                                        city: widget.widget.city);
-                                  }), ModalRoute.withName("/loading_screen"));
-                                },
-                                child: const Text(
-                                  'Optimistic',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                        ),
+                        // Perspective menu
+                        PopupMenuButton(
+                          offset: const Offset(100, 0),
+                          // constraints: const BoxConstraints.tightFor(width: 150),
+                          tooltip: 'Setting',
+                          iconColor: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
+                          itemBuilder: (context) => [
+                            CheckedPopupMenuItem(
+                              checked: widget.modeNumber == 1 ? true : false,
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoadingScreen(
+                                      modeNumber: 1,
+                                      isLocationMode:
+                                          widget.widget.isLocationMode,
+                                      city: widget.widget.city);
+                                }), ModalRoute.withName("/loading_screen"));
+                              },
+                              child: const Text(
+                                'Optimistic',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              CheckedPopupMenuItem(
-                                checked: widget.modeNumber == 2 ? true : false,
-                                onTap: () {
-                                  Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LoadingScreen(
-                                        modeNumber: 2,
-                                        isLocationMode:
-                                            widget.widget.isLocationMode,
-                                        city: widget.widget.city);
-                                  }), ModalRoute.withName("/loading_screen"));
-                                },
-                                child: const Text(
-                                  'Average',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                            ),
+                            CheckedPopupMenuItem(
+                              checked: widget.modeNumber == 2 ? true : false,
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoadingScreen(
+                                      modeNumber: 2,
+                                      isLocationMode:
+                                          widget.widget.isLocationMode,
+                                      city: widget.widget.city);
+                                }), ModalRoute.withName("/loading_screen"));
+                              },
+                              child: const Text(
+                                'Average',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              CheckedPopupMenuItem(
-                                checked: widget.modeNumber == 3 ? true : false,
-                                onTap: () {
-                                  Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LoadingScreen(
-                                        modeNumber: 3,
-                                        isLocationMode:
-                                            widget.widget.isLocationMode,
-                                        city: widget.widget.city);
-                                  }), ModalRoute.withName("/loading_screen"));
-                                },
-                                child: const Text(
-                                  'Pessimistic',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                            ),
+                            CheckedPopupMenuItem(
+                              checked: widget.modeNumber == 3 ? true : false,
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoadingScreen(
+                                      modeNumber: 3,
+                                      isLocationMode:
+                                          widget.widget.isLocationMode,
+                                      city: widget.widget.city);
+                                }), ModalRoute.withName("/loading_screen"));
+                              },
+                              child: const Text(
+                                'Pessimistic',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                modeNames[modeNumber - 1],
+                                style: const TextStyle(fontSize: 17),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                               ),
                             ],
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  modeNames[modeNumber - 1],
-                                  style: const TextStyle(fontSize: 17),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down_outlined,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                ),
-                              ],
-                            ),
                           ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        // textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            '${finalData.temperature}°',
-                            style: const TextStyle(
-                              fontSize: 80,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        ),
+                      ],
+                    ),
+                    // Row that holds current temperature, day, maximum and minimum temperature, and weather description.
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Current temperature.
+                        Text(
+                          '${finalData.temperature}°',
+                          style: const TextStyle(
+                            fontSize: 80,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10, bottom: 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        DateFormat('EEEE').format(date),
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "${finalData.maxTemperature}°/${finalData.minTemperature}°",
+                        ),
+                        // Adding padding to seperate the current temperature form other widgets.
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, bottom: 15),
+                          // Column that holds day, maximum and minimum temperature, and weather description.
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Row that holds day, maximum and minimum temperature.
+                              Row(
+                                children: [
+                                  // Adding padding to seperate the day from other widgets.
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    // Day
+                                    child: Text(
+                                      DateFormat('EEEE').format(date),
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Text(
-                                  finalData.weatherText!,
-                                  style: const TextStyle(fontSize: 15),
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  // Maximum and minimum temperature.
+                                  Text(
+                                    "${finalData.maxTemperature}°/${finalData.minTemperature}°",
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Weather description.
+                              Text(
+                                finalData.weatherText!,
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  SizedBox(
-                    height: 200,
-                    child: iconCreator.icon(iconNumber, 200),
-                  ),
-                  const SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Card(
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                // Adding space using SizedBox.
+                const SizedBox(height: 40),
+                // Weather Icon
+                SizedBox(
+                  height: 200,
+                  child: iconCreator.icon(iconNumber, 200),
+                ),
+                // Adding space using SizedBox.
+                const SizedBox(height: 40),
+                // Row that holds feels like and wind speed.
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      // feels like.
+                      child: Card(
                         color: Theme.of(context).colorScheme.secondary,
                         surfaceTintColor: Colors.white,
                         shadowColor: Colors.black,
@@ -249,7 +269,10 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      Card(
+                    ),
+                    Expanded(
+                      // wind speed.
+                      child: Card(
                         color: Theme.of(context).colorScheme.secondary,
                         surfaceTintColor: Colors.white,
                         shadowColor: Colors.black,
@@ -293,12 +316,16 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Card(
+                    ),
+                  ],
+                ),
+                // Row that holds humidiity and UV index
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      // Humidity
+                      child: Card(
                         color: Theme.of(context).colorScheme.secondary,
                         surfaceTintColor: Colors.white,
                         shadowColor: Colors.black,
@@ -330,7 +357,10 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      Card(
+                    ),
+                    Expanded(
+                      // UV index
+                      child: Card(
                         color: Theme.of(context).colorScheme.secondary,
                         surfaceTintColor: Colors.white,
                         shadowColor: Colors.black,
@@ -373,122 +403,127 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Card(
-                    color: Theme.of(context).colorScheme.secondary,
-                    surfaceTintColor: Colors.white,
-                    shadowColor: Colors.black,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                iconCreator.icon(
-                                    accIconData.iconNumber1 ?? 0, 40),
-                                Text(
-                                  DateFormat('EEEE')
-                                      .format(finalData.day1 ?? date),
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                                Text(
-                                  "${finalData.maxTemperatureDay1}°/${finalData.minTemperatureDay1}°",
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ],
-                            ),
+                    ),
+                  ],
+                ),
+                // Daily forecast
+                Card(
+                  color: Theme.of(context).colorScheme.secondary,
+                  surfaceTintColor: Colors.white,
+                  shadowColor: Colors.black,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              iconCreator.icon(
+                                  accIconData.iconNumber1 ?? 0, 40),
+                              Text(
+                                DateFormat('EEEE')
+                                    .format(finalData.day1 ?? date),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              Text(
+                                "${finalData.maxTemperatureDay1}°/${finalData.minTemperatureDay1}°",
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                iconCreator.icon(
-                                    accIconData.iconNumber2 ?? 0, 40),
-                                // : iconLink2 == '',
-                                Text(
-                                  DateFormat('EEEE')
-                                      .format(finalData.day2 ?? date),
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                                Text(
-                                  "${finalData.maxTemperatureDay2}°/${finalData.minTemperatureDay2}°",
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ],
-                            ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              iconCreator.icon(
+                                  accIconData.iconNumber2 ?? 0, 40),
+                              // : iconLink2 == '',
+                              Text(
+                                DateFormat('EEEE')
+                                    .format(finalData.day2 ?? date),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              Text(
+                                "${finalData.maxTemperatureDay2}°/${finalData.minTemperatureDay2}°",
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                iconCreator.icon(
-                                    accIconData.iconNumber3 ?? 0, 40),
-                                Text(
-                                  DateFormat('EEEE')
-                                      .format(finalData.day3 ?? date),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              iconCreator.icon(
+                                  accIconData.iconNumber3 ?? 0, 40),
+                              Text(
+                                DateFormat('EEEE')
+                                    .format(finalData.day3 ?? date),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
-                                Text(
-                                  "${finalData.maxTemperatureDay3}°/${finalData.minTemperatureDay3}°",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
+                              ),
+                              Text(
+                                "${finalData.maxTemperatureDay3}°/${finalData.minTemperatureDay3}°",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                iconCreator.icon(
-                                    accIconData.iconNumber4 ?? 0, 40),
-                                Text(
-                                  DateFormat('EEEE')
-                                      .format(finalData.day4 ?? date),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              iconCreator.icon(
+                                  accIconData.iconNumber4 ?? 0, 40),
+                              Text(
+                                DateFormat('EEEE')
+                                    .format(finalData.day4 ?? date),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
-                                Text(
-                                  "${finalData.maxTemperatureDay4}°/${finalData.minTemperatureDay4}°",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
+                              ),
+                              Text(
+                                "${finalData.maxTemperatureDay4}°/${finalData.minTemperatureDay4}°",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'Weather',
-                    style: TextStyle(color: Colors.white60, fontSize: 20),
-                  )
-                ],
-              ),
-            );
-          }),
+                ),
+                // Adding space using SizedBox.
+                const SizedBox(height: 15),
+                // Application Text.
+                const Text(
+                  'Weather',
+                  style: TextStyle(color: Colors.white60, fontSize: 20),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

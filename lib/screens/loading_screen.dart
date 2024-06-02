@@ -24,22 +24,26 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.isLocationMode) {
-      getDataByGeoLocation();
-    } else {
-      getDataByCityName(widget.city);
-    }
+    // Depending on the location mode getting the information either from actual location or city name.
+    widget.isLocationMode
+        ? getDataByGeoLocation()
+        : getDataByCityName(widget.city);
   }
 
   Future<void> getDataByGeoLocation() async {
     accweather.LocationData locationData1 = accweather.LocationData();
     weather_api.LocationData locationData2 = weather_api.LocationData();
     open_meteo.LocationData locationData3 = open_meteo.LocationData();
-    int? modeNumber = widget.modeNumber;
 
     Future(() async {
       Location location = Location();
-      await location.getCurrentLocation();
+      // if the user does not accept to share his location.
+      try {
+        await location.getCurrentLocation();
+      } catch (e) {
+        // Show the data for Chelyabinsk
+        return getDataByCityName('Chelyabinsk');
+      }
       double latitude = location.latitude;
       double longitude = location.longitude;
       dynamic locationDataList =
@@ -59,7 +63,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           locationWeatherS3: locationDataOpenMeteo,
           iconData: locationDataList[1],
           cityName: locationDataList[2],
-          modeNumber: modeNumber,
+          modeNumber: widget.modeNumber,
           widget: widget,
         );
       }), ModalRoute.withName("/home_screen"));
@@ -70,7 +74,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     accweather.LocationData locationData1 = accweather.LocationData();
     weather_api.LocationData locationData2 = weather_api.LocationData();
     open_meteo.LocationData locationData3 = open_meteo.LocationData();
-    int? modeNumber = widget.modeNumber;
 
     Future(() async {
       dynamic locationDataList =
@@ -90,7 +93,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           locationWeatherS3: locationDataOpenMeteo,
           iconData: locationDataList[1],
           cityName: locationDataList[2],
-          modeNumber: modeNumber,
+          modeNumber: widget.modeNumber,
           widget: widget,
         );
       }), ModalRoute.withName("/home_screen"));
@@ -104,10 +107,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Application Icon
           Image(
             image: AssetImage('assets/icons/Weather.png'),
             height: 200,
           ),
+          // Animated spinner
           SpinKitThreeBounce(
             color: Colors.white,
             size: 50,

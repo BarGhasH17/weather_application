@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/screens/loading_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:weather_application/services/city_names.dart';
 
 class CityScreen extends StatefulWidget {
   const CityScreen({super.key});
@@ -12,24 +13,11 @@ class CityScreen extends StatefulWidget {
 class _CityScreenState extends State<CityScreen> {
   TextEditingController cityController = TextEditingController();
   String? selectedCity;
-
-  // Simulated city name data source
-  final List<String> cityNames = [
-    'New York',
-    'Los Angeles',
-    'Chicago',
-    'Houston',
-    'Phoenix',
-    'Philadelphia',
-    'San Antonio',
-    'San Diego',
-    'Dallas',
-    'San Jose'
-    // Add more city names as needed
-  ];
+  CityNames cityNames1 = CityNames();
 
   @override
   Widget build(BuildContext context) {
+    List<String> cityNames = cityNames1.cityNames;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -51,6 +39,7 @@ class _CityScreenState extends State<CityScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TypeAheadFormField(
+                hideOnEmpty: true,
                 textFieldConfiguration: TextFieldConfiguration(
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.onSurface),
@@ -83,13 +72,6 @@ class _CityScreenState extends State<CityScreen> {
                 onSuggestionSelected: (String suggestion) {
                   cityController.text = suggestion;
                 },
-                noItemsFoundBuilder: (context) => const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'No cities found.',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ),
             ),
             // Button
