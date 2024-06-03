@@ -10,6 +10,25 @@ class CityScreen extends StatefulWidget {
   State<CityScreen> createState() => _CityScreenState();
 }
 
+dynamic goLoading(context, locationMode, {String? selectedCity}) {
+  if (locationMode) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LoadingScreen(
+        modeNumber: 2,
+        isLocationMode: locationMode,
+      );
+    }));
+  } else {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LoadingScreen(
+        modeNumber: 2,
+        isLocationMode: false,
+        city: selectedCity,
+      );
+    }));
+  }
+}
+
 class _CityScreenState extends State<CityScreen> {
   TextEditingController cityController = TextEditingController();
   String? selectedCity;
@@ -44,12 +63,19 @@ class _CityScreenState extends State<CityScreen> {
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.onSurface),
                   controller: cityController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      tooltip: 'Current location',
+                      onPressed: () {
+                        goLoading(context, true);
+                      },
+                      icon: const Icon(Icons.location_pin),
+                    ),
                     labelText: 'Enter a city name.',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: const TextStyle(color: Colors.white),
                     hintText: 'City Name...',
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
+                    hintStyle: const TextStyle(color: Colors.white),
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
@@ -71,6 +97,7 @@ class _CityScreenState extends State<CityScreen> {
                 },
                 onSuggestionSelected: (String suggestion) {
                   cityController.text = suggestion;
+                  goLoading(context, false, selectedCity: suggestion);
                 },
               ),
             ),
@@ -78,13 +105,7 @@ class _CityScreenState extends State<CityScreen> {
             ElevatedButton(
               onPressed: () {
                 selectedCity = cityController.text;
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return LoadingScreen(
-                    modeNumber: 2,
-                    isLocationMode: false,
-                    city: selectedCity,
-                  );
-                }));
+                goLoading(context, false, selectedCity: selectedCity);
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll<Color>(
@@ -92,8 +113,8 @@ class _CityScreenState extends State<CityScreen> {
                 ),
               ),
               child: const Text(
-                'Get location',
-                style: TextStyle(color: Colors.white),
+                'Choose city',
+                style: TextStyle(color: Colors.white, fontSize: 17),
               ),
             ),
           ],

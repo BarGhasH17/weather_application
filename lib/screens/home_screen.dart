@@ -223,15 +223,26 @@ class HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 // Adding space using SizedBox.
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
                 // Weather Icon
                 SizedBox(
                   height: 200,
                   child: iconCreator.icon(iconNumber, 200),
                 ),
                 // Adding space using SizedBox.
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
                 // Row that holds feels like and wind speed.
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Weather Details',
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -407,6 +418,17 @@ class HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 // Daily forecast
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Daily Forecast',
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
                 Card(
                   color: Theme.of(context).colorScheme.secondary,
                   surfaceTintColor: Colors.white,
